@@ -1,41 +1,82 @@
 import 'package:flutter/material.dart';
 
+import './question.dart';
+import './answer.dart';
+
 // void main() {
 //   runApp(MyApp());
 // }
-void main() => runApp(new MyApp());
 
-class MyApp extends StatelessWidget {
-  var questionIndex = 0;
-  void answerQuestion() => print(questionIndex);
+void main() => runApp(MyApp());
+
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _MyAppState();
+  }
+}
+
+class _MyAppState extends State<MyApp> {
+  final questions = const [
+    {
+      'questionText': 'What\'s your favorite color?',
+      'answers': ['Black', 'Blue', 'Grey', 'Dark blue'],
+    },
+    {
+      'questionText': 'What\'s your favorite animal?',
+      'answers': ['Cat', 'Dog', 'Cow', 'Lion'],
+    },
+    {
+      'questionText': 'Who\'s your favorite instructor?',
+      'answers': ['Amir sir', 'Ahsan Sir', 'Tanvir Sir', 'Bilawal Sir'],
+    },
+  ];
+  var _questionIndex = 0;
+
+  void _answerQuestion() {
+    // var aBool = true;
+    // aBool = false;
+
+    setState(() {
+      _questionIndex = _questionIndex + 1;
+    });
+    print(_questionIndex);
+    if (_questionIndex < questions.length) {
+      print('We\'ve more questions!');
+    } //else {
+    //print('No more questions!');
+    //}
+  }
 
   @override
   Widget build(BuildContext context) {
-    var questions = [
-      'What\'s your favorite colour?',
-      'What\'s your favorite animal?',
-      'What\'s your favorite celeberity?',
-    ];
+    // var dummy = const ['Hello'];
+    // dummy.add('Max');
+    // print(dummy);
+    // dummy = [];
+    // questions = []; // does not work if questions is a const
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text('My First App'),
         ),
-        body: Column(
-          children: [
-            Text(questions[questionIndex]),
-            RaisedButton(
-              child: Text('Answer 1'),
-              onPressed: answerQuestion,
-            ),
-            RaisedButton(
-                child: Text('Answer 2'),
-                onPressed: () => print('Answer chosen 2!')),
-            RaisedButton(
-                child: Text('Answer 3'),
-                onPressed: () => print('Answer chosen 3!'))
-          ],
-        ),
+        body: _questionIndex < questions.length
+            ? Column(
+                children: [
+                  Question(
+                    questions[_questionIndex]['questionText'],
+                  ),
+                  ...(questions[_questionIndex]['answers'] as List<String>)
+                      .map((answer) {
+                    return Answer(_answerQuestion, answer);
+                  }).toList()
+                ],
+              )
+            : Center(
+                child: Text('You completed the Questionaire'),
+              ),
       ),
     );
   }
