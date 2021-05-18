@@ -22,33 +22,40 @@ class _MyAppState extends State<MyApp> {
     {
       'questionText': 'What\'s your favorite color?',
       'answers': [
-        {'text': 'Black', 'score': 10},
-        {'text': 'Blue', 'score': 8},
-        {'text': 'Grey', 'score': 5},
-        {'text': 'Dark blue', 'score': 20}
+        {'text': 'Black', 'score': 12},
+        {'text': 'Red', 'score': 15},
+        {'text': 'Green', 'score': 13},
+        {'text': 'White', 'score': 11},
       ],
     },
     {
       'questionText': 'What\'s your favorite animal?',
       'answers': [
-        {'text': 'Dog', 'score': 9},
-        {'text': 'Cow', 'score': 15},
-        {'text': 'Lion', 'score': 12},
-        {'text': 'Horse', 'score': 30}
+        {'text': 'Rabbit', 'score': 3},
+        {'text': 'Snake', 'score': 11},
+        {'text': 'Elephant', 'score': 5},
+        {'text': 'Lion', 'score': 9},
       ],
     },
     {
       'questionText': 'Who\'s your favorite instructor?',
       'answers': [
-        {'text': 'Amir Sir', 'score': 5},
-        {'text': 'Bilawal Sir', 'score': 7},
-        {'text': 'Ahsan Sir', 'score': 3},
-        {'text': 'No One', 'score': 0}
+        {'text': 'Amir sir', 'score': 4},
+        {'text': 'Bilawal sir', 'score': 3},
+        {'text': 'Ahsan sir', 'score': 2},
+        {'text': 'Tanvir sir', 'score': 1},
       ],
     },
   ];
   var _questionIndex = 0;
   var _totalScore = 0;
+
+  void _resetQuiz() {
+    setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
+    });
+  }
 
   void _answerQuestion(int score) {
     // var aBool = true;
@@ -85,7 +92,7 @@ class _MyAppState extends State<MyApp> {
                   questionIndex: _questionIndex,
                   questions: _questions,
                 )
-              : Result(_totalScore)),
+              : Result(_totalScore, _resetQuiz)),
     );
   }
 }
